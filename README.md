@@ -1,2 +1,3 @@
 # ohtuvarasto
-HY ohjelmistotuotanto-kurssi, 2. periodi 2023
+
+![Workflow badge](https://github.com/ksaunamaki/ohtuvarasto/workflows/CI/badge.svg)
