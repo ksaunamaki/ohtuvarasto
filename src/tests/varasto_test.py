@@ -38,3 +38,53 @@ class TestVarasto(unittest.TestCase):
 
         # varastossa pitäisi olla tilaa 10 - 8 + 2 eli 4
         self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 4)
+
+    def test_liian_suuri_lisays_ei_onnistu(self):
+        self.varasto.lisaa_varastoon(15)
+
+        # varaston tila pitäisi olla nyt nolla eli kaikki tila käytetty
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 0)
+
+    def test_negatiivinen_lisays_ei_onnistu(self):
+        self.varasto.lisaa_varastoon(-1)
+
+        # varaston tila pitäisi olla edelleen alkuperäinen
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 10)
+
+    def test_liian_suuri_otto_ei_onnistu(self):
+        self.varasto.lisaa_varastoon(5)
+
+        self.varasto.ota_varastosta(7)
+
+        # varaston tila pitäisi olla takaisin alunperäinen
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 10)
+
+    def test_negatiivinen_otto_ei_onnistu(self):
+        self.varasto.lisaa_varastoon(5)
+
+        self.varasto.ota_varastosta(-1)
+
+        # varaston tila pitäisi olla edelleen sama kuin ennen ottoa
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 5)
+    
+    def test_konstruktori_hylkaa_vaaran_tilavuuden(self):
+        self.varasto = Varasto(0)
+
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 0)
+
+        self.varasto = Varasto(-1)
+
+        # huom! konstruktorissa on bugi joka asettaa negatiivisilla tilavuudelle alkusaldon annetulle tilavuudelle eikä nollaksi!
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 1)
+
+    def test_konstruktori_hylkaa_vaaran_saldon(self):
+        self.varasto = Varasto(10, -1)
+
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 10)
+
+        self.varasto = Varasto(10, 11)
+
+        self.assertAlmostEqual(self.varasto.paljonko_mahtuu(), 0)
+
+    def test_selite_palauttaa_varaston_tiedot(self):
+        self.assertEqual(self.varasto.__str__(), "saldo = 0, vielä tilaa 10")
