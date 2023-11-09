@@ -59,6 +59,14 @@ def main():
     second_round(mehua, olutta)
     third_round(mehua, olutta)
 
+    # lisätään muutamia riviä että Lint huomaa liian pitkän metodin ja CI menee rikki
+    print("Lopussa:")
+    print(f"Mehuvarasto: {mehua}")
+    print(f"Olutvarasto: {olutta}")
+
+    print(f"saldo = {olutta.saldo}")
+    print(f"tilavuus = {olutta.tilavuus}")
+    print(f"paljonko_mahtuu = {olutta.paljonko_mahtuu()}")
 
 if __name__ == "__main__":
     main()
